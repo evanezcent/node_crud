@@ -17,7 +17,7 @@ mhsRepo.prototype = {
             if(err){
                 errCb(err);
             }
-            cb.results;
+            cb(results);
         });
     },
 
@@ -30,7 +30,7 @@ mhsRepo.prototype = {
             if(err){
                 errCb(err);
             }
-            cb.results;
+            cb(results);
         });
     },
 
@@ -42,7 +42,7 @@ mhsRepo.prototype = {
             if(err){
                 errCb(err);
             }
-            cb.results;
+            cb(results);
         });
     },
 
