@@ -1,0 +1,22 @@
+extends layout
+
+block content
+  h1= title
+  button.btn.btn-success #[a(href="/add_mahasiswa") Add]
+  div#table-mhs
+    table.table
+        thead.thead-dark
+            tr
+                th NIM
+                th NAMA
+                th JURUSAN
+                th KELAS
+                th ACTION
+        tbody
+            each m in mahasiswa
+                tr
+                    td #{m.nim}
+                    td #{m.nama}
+                    td #{m.jurusan}
+                    td #{m.kelas}
+                    td #[a(href='/data_mahasiswa/'+m.nim).btn.btn-dark Read More] | #[a(href='/update_mahasiswa/'+m.nim).btn.btn-secondary Edit] | #[a(href='/delete_student/'+m.nim).btn.btn-danger Delete]
