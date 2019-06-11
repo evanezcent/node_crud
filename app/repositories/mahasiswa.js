@@ -1,6 +1,7 @@
 'use strict'
 
 let Mhs = require('../domains/mhs');
+let db = require('../config/mysql');
 
 let mhsRepo = function(db){
     this.db = db;
