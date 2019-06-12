@@ -1,0 +1,13 @@
+extends layout
+
+block content
+    h1= title
+
+    button.btn.btn-dark.mb-2 #[a(href='/') Home]
+    div#data-mahasiswa.text-mute.text-center
+        div.card
+            div.card-body
+                h5.card-title #{mahasiswa.nama}
+                h6.card-subtitle.mb2.text-mute #{mahasiswa.nim}
+                p.card-text #{mahasiswa.kelas}
+                p.card-text #{mahasiswa.jurusan}

@@ -23,13 +23,14 @@ mhsRepo.prototype = {
 
     update: function(m, cb, errCb){
         let db = this.db;
-        let data = [m.nim, m.nama, m.jurusan, m.kelas];
+        let data = [m.nama, m.jurusan, m.kelas, m.nim];
         let query = 'UPDATE mahasiswa SET nama = ?, jurusan = ?, kelas = ? WHERE nim = ?';
 
         db.query(query, data, (err, results) => {
             if(err){
                 errCb(err);
             }
+            // console.log(data.nama);
             cb(results);
         });
     },

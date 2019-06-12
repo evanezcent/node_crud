@@ -2,6 +2,7 @@ extends layout
 
 block content
     h1= title
+    button.btn.btn-dark.mb-2 #[a(href='/') Home]
     div#form-add
         form(method="post" action="/save_mhs")
             label(for="NIM") NIM :
@@ -16,4 +17,4 @@ block content
             label(for="KELAS") KELAS :
             input(type="text" name="kelas").form-control
 
-            button(type='submit').btn.btn-success ADD
+            button(type='submit').btn.btn-success.mt-4 ADD

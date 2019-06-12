@@ -2,7 +2,7 @@ extends layout
 
 block content
   h1= title
-  button.btn.btn-success #[a(href="/add_mahasiswa") Add]
+  button.btn.btn-success.mb-2 #[a(href="/add_mahasiswa") Add]
   div#table-mhs
     table.table
         thead.thead-dark
@@ -19,4 +19,4 @@ block content
                     td #{m.nama}
                     td #{m.jurusan}
                     td #{m.kelas}
-                    td #[a(href='/data_mahasiswa/'+m.nim).btn.btn-dark Read More] | #[a(href='/update_mahasiswa/'+m.nim).btn.btn-primary Edit] | #[a(href='/delete_student/'+m.nim).btn.btn-danger Delete]
+                    td #[a(href='/data_mahasiswa/'+m.nim).btn.btn-dark Read More] | #[a(href='/update_mahasiswa/'+m.nim).btn.btn-primary Edit] | #[a(href='/delete_mahasiswa/'+m.nim).btn.btn-danger Delete]

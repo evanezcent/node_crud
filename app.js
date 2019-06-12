@@ -25,6 +25,13 @@ app.get('/', mhsController.getAllMhs);
 app.get('/add_mahasiswa', mhsController.saveView);
 app.post('/save_mhs', mhsController.saveMhs);
 
+app.get('/update_mahasiswa/:nim', mhsController.updateView);
+app.post('/update_mahasiswa', mhsController.updateMhs);
+
+app.get('/data_mahasiswa/:nim', mhsController.getMhs);
+
+app.get('/delete_mahasiswa/:nim', mhsController.deleteMhs);
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));

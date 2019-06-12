@@ -53,6 +53,7 @@ let updateMhs = (req, res, next) => {
     let mhs = new Mhs(data.nim, data.nama, data.jurusan, data.kelas);
     let mhsRepo = new MahasiswaRepo(db);
     mhsRepo.update(mhs, result => {
+        // console.log(mhs.nama);
         res.redirect('/');
     }, err => {
         if(err){
@@ -69,7 +70,7 @@ let deleteMhs = (req, res, next) => {
 
     let nim = req.params.nim;
     let mhsRepo = new MahasiswaRepo(db);
-    mhsRepo.searchMhs(nim, result => {
+    mhsRepo.delete(nim, result => {
         res.redirect('/')
     }, err => {
         if(err){
@@ -85,6 +86,7 @@ let getMhs = (req, res, next) => {
     }
 
     let nim = req.params.nim;
+    // console.log(nim);
     let mhsRepo = new MahasiswaRepo(db);
     mhsRepo.searchMhs(nim, result => {
         res.render('data_mahasiswa', {'mahasiswa': result, 'title': 'Data Mahasiswa' })
@@ -114,5 +116,6 @@ module.exports = {
     saveMhs : saveMhs,
     updateMhs : updateMhs,
     getMhs : getMhs,
-    getAllMhs : getAllMhs
+    getAllMhs : getAllMhs,
+    deleteMhs : deleteMhs
 };
