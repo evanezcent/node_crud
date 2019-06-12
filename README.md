@@ -1,2 +1,7 @@
-# node_crud
-A simple CRUD with node js, express js, and jade
+Run with :
+```npm start```
+Make database in localhost (because i forget to export the database LoL) with table :
+1. nim
+2. nama
+3. jurusan
+4. kelas
