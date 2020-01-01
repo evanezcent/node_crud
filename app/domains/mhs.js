@@ -1,10 +1,11 @@
 'use strict'
 
-let Mhs = function(nim, nama, jurusan, kelas){
+let Mhs = function(nim, nama, jurusan, angkatan, password){
     this.nim = nim;
     this.nama = nama;
     this.jurusan = jurusan;
-    this.kelas = kelas;
+    this.angkatan = angkatan;
+    this.password = password;
 }; 
 
 module.exports = Mhs;

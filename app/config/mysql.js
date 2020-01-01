@@ -6,7 +6,7 @@ let con = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: '',
-    database: 'node'
+    database: 'mahasiswa'
 });
 
 con.connect();
