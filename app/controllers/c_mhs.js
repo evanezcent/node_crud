@@ -127,13 +127,13 @@ let getAllMhs = (req, res, next) => {
 router.get('/getData', (req, res) => {
 
     knex('mahasiswas')
-    .select()
-    .then(data => {
-        res.send(data)
-    })
-    .catch(err => {
-        res.status(404).send(err)
-    })
+        .select()
+        .then(data => {
+            res.send(data)
+        })
+        .catch(err => {
+            res.status(404).send(err)
+        })
 
     // let mhsRepo = new MahasiswaRepo(db);
 
@@ -160,7 +160,7 @@ router.post('/addData', (req, res) => {
                 .insert({
                     'nama': data.tx_name,
                     'nim': data.tx_nim,
-                    'jurusan': data.tx_name,
+                    'jurusan': data.tx_jurusan,
                     'angkatan': data.tx_angkatan,
                     'password': data.tx_password,
                 })
@@ -197,6 +197,33 @@ router.post('/addData', (req, res) => {
     //         msg: "Password tidak sama"
     //     })
     // }
+})
+
+router.put("/editData/:nim", (req, res) => {
+    if (!req.body) {
+        next('Empty fields !');
+    } else {
+        let data = req.body;
+        // console.log("JALAN!!!!!!")
+        knex('mahasiswas')
+            .where('nim', req.params.nim)
+            .update({
+                'nama': data.tx_name,
+                'jurusan': data.tx_jurusan,
+                'angkatan': data.tx_angkatan
+            })
+            .then(data2 => {
+                res.send({
+                    success: true,
+                    data2
+                })
+            })
+            .catch(err => {
+                res.status(404).send({
+                    success: false
+                })
+            })
+    }
 })
 
 module.exports = router
