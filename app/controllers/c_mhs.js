@@ -6,6 +6,16 @@ let Mhs = require('../domains/mhs');
 var express = require('express');
 let router = express.Router();
 
+var knex = require('knex')({
+    client: 'mysql',
+    connection: {
+        host: 'localhost',
+        user: 'root',
+        password: '',
+        database: 'mahasiswa'
+    }
+});
+
 //Buka view add mahasiswa
 let saveView = (req, res, next) => {
     res.render('add_mahasiswa', { 'title': 'Add new Mahasiswa' });
@@ -115,46 +125,78 @@ let getAllMhs = (req, res, next) => {
 // API=================================================================
 // Get all data
 router.get('/getData', (req, res) => {
-    let mhsRepo = new MahasiswaRepo(db);
 
-    mhsRepo.getAll(result => {
-        res.send(
-            result
-        )
-    }, err => {
-        if (err) {
-            res.status(404).send({
-                success: false
-            })
-        }
-    });
+    knex('mahasiswas')
+    .select()
+    .then(data => {
+        res.send(data)
+    })
+    .catch(err => {
+        res.status(404).send(err)
+    })
+
+    // let mhsRepo = new MahasiswaRepo(db);
+
+    // mhsRepo.getAll(result => {
+    //     res.send(
+    //         result
+    //     )
+    // }, err => {
+    //     if (err) {
+    //         res.status(404).send({
+    //             success: false
+    //         })
+    //     }
+    // });
 })
 
 router.post('/addData', (req, res) => {
     if (!req.body) {
         next('Empty fields !');
+    } else {
+        let data = req.body;
+        if (data.tx_cpass == data.tx_password) {
+            knex('mahasiswas')
+                .insert({
+                    'nama': data.tx_name,
+                    'nim': data.tx_nim,
+                    'jurusan': data.tx_name,
+                    'angkatan': data.tx_angkatan,
+                    'password': data.tx_password,
+                })
+                .then(data2 => {
+                    res.send({
+                        success: true,
+                        data2
+                    })
+                })
+        } else {
+            res.status(404).send({
+                success: false,
+                msg: "Password tidak sama"
+            })
+        }
     }
 
-    let data = req.body;
-    if (data.tx_cpass == data.tx_password) {
-        let mhs = new Mhs(data.tx_nim, data.tx_name, data.tx_jurusan, data.tx_angkatan, data.tx_password);
-        let mhsRepo = new MahasiswaRepo(db);
-        mhsRepo.save(mhs, result => {
-            res.send(
-                result
-            )
-        }, err => {
-            if (err) {
-                next(err);
-                console.log('Tidak dapat menambah data')
-            }
-        });
-    }else{
-        res.status(404).send({
-            success: false,
-            msg : "Password tidak sama"
-        })
-    }
+    // if (data.tx_cpass == data.tx_password) {
+    //     let mhs = new Mhs(data.tx_nim, data.tx_name, data.tx_jurusan, data.tx_angkatan, data.tx_password);
+    //     let mhsRepo = new MahasiswaRepo(db);
+    //     mhsRepo.save(mhs, result => {
+    //         res.send(
+    //             result
+    //         )
+    //     }, err => {
+    //         if (err) {
+    //             next(err);
+    //             console.log('Tidak dapat menambah data')
+    //         }
+    //     });
+    // } else {
+    //     res.status(404).send({
+    //         success: false,
+    //         msg: "Password tidak sama"
+    //     })
+    // }
 })
 
 module.exports = router
