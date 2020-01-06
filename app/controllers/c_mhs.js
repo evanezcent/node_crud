@@ -226,6 +226,24 @@ router.put("/editData/:nim", (req, res) => {
     }
 })
 
+router.delete("/deleteData/:nim", (req, res) => {
+    let nim = req.params.nim
+
+    knex('mahasiswas')
+    .where('nim', nim)
+    .del()
+    .then( ()=>{
+        res.send({
+            success: true
+        })
+    })
+    .catch(err => {
+        res.status(404).send({
+            success: false
+        })
+    })
+});
+
 module.exports = router
 
 // module.exports = {
