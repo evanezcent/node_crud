@@ -230,19 +230,63 @@ router.delete("/deleteData/:nim", (req, res) => {
     let nim = req.params.nim
 
     knex('mahasiswas')
-    .where('nim', nim)
-    .del()
-    .then( ()=>{
-        res.send({
-            success: true
+        .where('nim', nim)
+        .del()
+        .then(() => {
+            res.send({
+                success: true
+            })
         })
-    })
-    .catch(err => {
-        res.status(404).send({
-            success: false
+        .catch(err => {
+            res.status(404).send({
+                success: false
+            })
         })
-    })
 });
+
+
+router.put('/uploadFoto/:nim', (req, res) => {
+    if (!req.files || Object.keys(req.files).length === 0) {
+        res.status(400).send({
+            success: false,
+            message: "File not found !"
+        });
+    }
+
+    var file = req.files.photo
+    var photo = Math.floor(Math.random() * 100000).toString() + ".png"
+
+    if (file.mimetype == "image/jpeg" || file.mimetype == "image/png"){
+        file.mv('uploads/' + photo, err =>{
+            if (err) {
+                log.error(err)
+                console.log(err)
+                res.status(404).send({
+                    success: false,
+                    message: "File is empty !",
+                    url: "http://localhost:7000/uploads/" + photo
+                })
+            }else{
+                knex('mahasiswas')
+                .where('nim', req.params.nim)
+                .update('foto_profil', photo)
+                .then(data => {
+                    res.send({
+                        status: true
+                    })
+                })
+                .catch(err => {
+                    log.error(err)
+                    console.log(err)
+                    res.status(404).send({
+                        status: false,
+                        message: "Error request to the server"
+                    })
+                })
+            }
+        })
+    }
+})
 
 module.exports = router
 
