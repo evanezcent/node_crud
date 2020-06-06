@@ -245,9 +245,10 @@ router.delete("/deleteData/:nim", (req, res) => {
 });
 
 
-router.put('/uploadFoto/:nim', (req, res) => {
+router.post('/uploadFoto/:nim', (req, res) => {
     if (!req.files || Object.keys(req.files).length === 0) {
-        res.status(400).send({
+        // console.log(req.files.photo)
+        res.status(500).send({
             success: false,
             message: "File not found !"
         });
@@ -256,7 +257,7 @@ router.put('/uploadFoto/:nim', (req, res) => {
     var file = req.files.photo
     var photo = Math.floor(Math.random() * 100000).toString() + ".png"
 
-    if (file.mimetype == "image/jpeg" || file.mimetype == "image/png"){
+    if (file.mimetype == "image/jpeg" || file.mimetype == "image/png" || file.mimetype == "image/png"){
         file.mv('uploads/' + photo, err =>{
             if (err) {
                 log.error(err)
